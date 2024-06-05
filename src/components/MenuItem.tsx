@@ -6,7 +6,7 @@ interface Props{
     onClick: () => void;
 }
 
-const MenuItem = ({active=false, text, onClick}:Props) => {
+const MenuItem = ({active, text, onClick}:Props) => {
   return (
     <div className={'menuItem' + (active ? ' active' : '')} onClick={onClick}>{text}</div>
 

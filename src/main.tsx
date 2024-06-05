@@ -10,7 +10,6 @@ if(localStorage.getItem('dashboards') != null){
   const wattrouters = JSON.parse(localStorage.getItem('dashboards')).filter((item) => item.type == 'wattrouter');
   wattrouters.forEach((item) => {
     const intervalId = setInterval(() => {
-      console.log(item.ip);
       fetch(`${item.ip}/meas.xml`)
       .then(response => response.text())
       .then(xmlString => {
@@ -19,7 +18,7 @@ if(localStorage.getItem('dashboards') != null){
         localStorage.setItem(item.ip, JSON.stringify(result));
       })
       .catch(error => console.error('Chyba při načítání XML:', error));
-      }, 15000);
+      }, 30000);
   })
 }
 

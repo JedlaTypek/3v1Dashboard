@@ -1,32 +1,30 @@
-import React from 'react'
+import MenuItem from './MenuItem'
+import { DashboardType, createBlankDashboards } from './utils';
 
-interface DashboardItemType{
-    name: string;
-    url: string;
+interface Props{
+    type: string;
+    setActiveDashboard: (id:number) => void;
 }
 
-function getDashboardItems() {
-    let dashboards = localStorage.getItem('dashboards');
-    if (dashboards === null) {
-      const initialdashboards = [
-        { name: 'Dashboard', visible: true },
-        { name: 'Solax', visible: true },
-        { name: 'Wattrouter', visible: true },
-        { name: 'Ecowitt', visible: true }
-      ];
-      localStorage.setItem('dashboards', JSON.stringify(initialdashboards));
-      return initialdashboards;
-    }
-    return JSON.parse(dashboards);
+function getDashboardsByType(type:string):DashboardType[] {
+  let dashboards = localStorage.getItem('dashboards');
+  if (dashboards === null) {
+    const initialDashboards = createBlankDashboards();
+    localStorage.setItem('dashboards', JSON.stringify(initialDashboards));
+    dashboards = localStorage.getItem('dashboards');;
   }
+  return JSON.parse(dashboards ? dashboards : '[]').filter((item:DashboardType) => item.type.toLowerCase() == type.toLowerCase());
+}
 
-const Menu = () => {
-    const items:MenuItemType[] = getMenuItems();
-    return (
-        items.map((item: MenuItemType) => 
-            item.visible ? <MenuItem text={item.name || "Dashboard"} active={false} onClick={() => console.log(item.name || 'Dashboard')}/> : ''
-          )
+const DashboardsBar = ({type, setActiveDashboard}:Props) => {
+  console.log(type);
+  const items:DashboardType[] = getDashboardsByType(type);
+  console.log(items);
+  return (
+    items.map((item) => 
+      <MenuItem key={item.name} text={item.name} active={false} onClick={() => setActiveDashboard(item.id)}/>
     )
+  )
 }
 
 export default DashboardsBar

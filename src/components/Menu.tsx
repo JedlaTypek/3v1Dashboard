@@ -2,11 +2,11 @@ import MenuItem from './MenuItem'
 
 interface MenuItemType{
     name: string;
-    visible: boolean;
-    activeId: number;
+    activeDashboardId: number;
 }
 
 interface Props{
+  activeDashboard: number;
   setActiveDashboard: (id:number) => void;
 }
 
@@ -14,10 +14,10 @@ function getMenuItems() {
     let menu = localStorage.getItem('menu');
     if (menu === null) {
       const initialMenu = [
-        { name: 'Dashboard', visible: true, activeId:0 },
-        { name: 'Solax', visible: true, activeId:1 },
-        { name: 'Ecowitt', visible: true, activeId:2 },
-        { name: 'Wattrouter', visible: true, activeId:3 }
+        { name: 'Dashboard', activeDashboardId:0 },
+        { name: 'Solax', activeDashboardId:1 },
+        { name: 'Ecowitt', activeDashboardId:2 },
+        { name: 'Wattrouter', activeDashboardId:3 }
       ];
       localStorage.setItem('menu', JSON.stringify(initialMenu));
       return initialMenu;
@@ -25,12 +25,12 @@ function getMenuItems() {
     return JSON.parse(menu);
   }
 
-const Menu = ({setActiveDashboard}:Props) => {
+const Menu = ({activeDashboard, setActiveDashboard}:Props) => {
     const items:MenuItemType[] = getMenuItems();
 
     return (
         items.map((item: MenuItemType) => 
-            item.visible ? <MenuItem key={item.name} text={item.name} active={false} onClick={() => setActiveDashboard(item.activeId)}/> : ''
+            <MenuItem key={item.name} text={item.name} active={item.activeDashboardId == activeDashboard} onClick={() => setActiveDashboard(item.activeDashboardId)}/>
           )
     )
 }
