@@ -37,7 +37,7 @@ function generateUrl(id:number):string | null{
   }
   switch(dashboard.type){
     case 'solax':
-      return `http://localhost:3000/api/solax?token=${dashboard.token != null ? dashboard.token : ' '}&sn=${dashboard.sn != null ? dashboard.sn : ' '}`;
+      return `http://jedlicka.click:3002/api/solax?token=${dashboard.token != null ? dashboard.token : ' '}&sn=${dashboard.sn != null ? dashboard.sn : ' '}`;
     case 'ecowitt':
       return `https://api.ecowitt.net/api/v3/device/real_time?application_key=${dashboard.app_key}&api_key=${dashboard.api_key}&mac=${dashboard.mac}&call_back=all&temp_unitid=1&pressure_unitid=3&wind_speed_unitid=6&rainfall_unitid=12`
     default:
@@ -64,10 +64,25 @@ async function getData(id: number) {
 const Dashboard = ({id}:Props) => {
   const [data, setData] = useState<any>(null);
   const [error, setError] = useState<Error | null>(null);
+  const [type, setType] = useState<string>('');
+
+  if(id === 0){
+    return(
+      <>
+        <select className="form-select" aria-label="Default select example">
+          <option value="ecowitt">Ecowitt</option>
+          <option value="solax">Solax</option>
+          <option value="wattrouter">Wattrouter</option>
+        </select>
+        <p>{type}</p>
+      </>
+    )   
+    
+  }
 
   useEffect(() => {
     setData(null);
-    if(id === 0){
+    if(id === 1){
       const dashboards = getDashboardItems();
       let allData:any[] = [];
       dashboards.forEach((dashboard) => {
@@ -89,7 +104,7 @@ const Dashboard = ({id}:Props) => {
         const data = localStorage.getItem(dashboard.ip);
         setData(JSON.parse(data ? data : ''));
       }
-    } else{
+    } else {
       getData(id)
       .then(data => setData(data))
       .catch(error => console.error('Error:', error));

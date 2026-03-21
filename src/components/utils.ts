@@ -14,38 +14,9 @@ interface DashboardType {
   export function createBlankDashboards(): DashboardType[] {
     return [
       { 
-        id: 0,
+        id: 1,
         type: 'dashboard',
         name: 'Dashboard'
-      },
-      {
-        id: 1,
-        type: 'solax',
-        name: 'Solax Nahoře',
-        token: '',
-        sn: ''
-      },
-      { 
-        id: 2,
-        type: 'ecowitt',
-        name: 'Ecowitt',
-        api_key: '',
-        app_key: '',
-        mac: ''
-      },
-      {
-        id: 3,
-        type: 'wattrouter',
-        name: 'Wattrouter',
-        visible: true,
-        ip: 'http://192.168.66.249:8080'
-      },
-      { 
-        id: 4,
-        type: 'solax',
-        name: 'Solax Dole',
-        token: '',
-        sn: ''
       }
     ];
   }

@@ -20,11 +20,14 @@ const DashboardsBar = ({type, setActiveDashboard}:Props) => {
   console.log(type);
   const items:DashboardType[] = getDashboardsByType(type);
   console.log(items);
-  return (
-    items.map((item) => 
-      <MenuItem key={item.name} text={item.name} active={false} onClick={() => setActiveDashboard(item.id)}/>
+  if(items.length != 0){
+    return (
+      items.map((item) => 
+        <MenuItem key={item.name} text={item.name} active={false} onClick={() => setActiveDashboard(item.id)}/>
+      )
     )
-  )
+  }
+  
 }
 
 export default DashboardsBar

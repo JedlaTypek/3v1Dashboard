@@ -10,14 +10,14 @@ import './App.css';
 
 function App() {
   const [alertVisible, setAlertVisibility] = useState(false);
-  const [activeDashboard, setActiveDashboard] = useState(2);
+  const [activeDashboard, setActiveDashboard] = useState(0);
 
   return (
     <>
       <Header title="3v1&nbsp;Dashboard">
         <Menu activeDashboard={activeDashboard} setActiveDashboard={setActiveDashboard} />
       </Header>
-      {activeDashboard ? <div className="dashboardBar"><DashboardsBar type={getDashboardType(activeDashboard)} setActiveDashboard={setActiveDashboard} /></div> : ''}
+      {activeDashboard > 1 ? <div className="dashboardBar"><DashboardsBar type={getDashboardType(activeDashboard)} setActiveDashboard={setActiveDashboard} /></div> : ''}
       <main className="dashboard">
         <Dashboard id={activeDashboard} />
         {alertVisible && <Alert color="danger" onClose={() => setAlertVisibility(false)}>This is an alert!</Alert>}
